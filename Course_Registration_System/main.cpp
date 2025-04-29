@@ -46,7 +46,6 @@ void login() {
     bool should_quit = false;
     bool login_success = false;
     
-    // 创建登录按钮
     Component login_button = Button("Login", [&] {
         if (input_id.empty()) {
             should_quit = true;
@@ -61,23 +60,19 @@ void login() {
         }
     });
 
-    // 创建退出按钮
     Component quit_button = Button("Quit", screen.ExitLoopClosure());
-    
-    // 创建按钮容器
+
     auto button_container = Container::Horizontal({
         login_button,
         quit_button
     });
 
-    // 创建主容器
     auto main_container = Container::Vertical({
         id_input,
         password_input,
         button_container
     });
 
-    // 创建渲染器
     auto renderer = Renderer(main_container, [&] {
         return vbox({
             title | hcenter,
@@ -98,7 +93,6 @@ void login() {
         }) | border;
     });
 
-    // 添加事件处理
     auto event_handler = CatchEvent(renderer, [&](Event event) {
         if (event == Event::Character('q') || event == Event::Character('Q')) {
             should_quit = true;
@@ -110,7 +104,6 @@ void login() {
 
     screen.Loop(event_handler);
 
-    // 如果登录成功且不是退出，则进入主菜单
     if (login_success && !should_quit) {
         menu();
     }
